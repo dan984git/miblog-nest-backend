@@ -9,13 +9,12 @@ import ormConfigProd from './config/orm.config.prod';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [ormConfig],
+      load: [ormConfigProd],
       expandVariables: true,
-      envFilePath: `${process.env.NODE_ENV ?? 'dev'}.env`,
     }),
     TypeOrmModule.forRootAsync({
       useFactory: (
-        process.env.NODE_ENV === 'prod' ? ormConfigProd : ormConfig
+        ormConfigProd
       )
     }),
     ArticlesModule,
