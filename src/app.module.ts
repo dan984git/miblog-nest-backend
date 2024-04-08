@@ -9,12 +9,12 @@ import ormConfigProd from './config/orm.config.prod';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [ormConfigProd],
+      load: [ormConfigProd], //ormConfig
       expandVariables: true,
     }),
     TypeOrmModule.forRootAsync({
       useFactory: (
-        ormConfigProd
+        ormConfigProd // ormConfig
       )
     }),
     ArticlesModule,
