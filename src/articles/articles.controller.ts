@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Logger, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Logger, NotFoundException, Param, Patch, Post } from "@nestjs/common";
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from "typeorm";
 import { Article } from "./articles.entity";
@@ -25,12 +25,11 @@ export class ArticlesController {
             where: { outstanding: 1 }
         })
 
-        if (article == null) {
-            this.logger.log(`Hit ${article}`);
-            return [];
-        } else {
-            return article;
+        if (!article) {
+            throw new NotFoundException();
         }
+
+        return article;
     }
 
     @Get('find/:req')
@@ -45,11 +44,10 @@ export class ArticlesController {
                 author: Like(`%${req}%`),
             }]
         })
-        if (article == null) {
-            return [];
-        } else {
-            return article;
+        if (!article) {
+            throw new NotFoundException();
         }
+        return article;
     }
 
     @Get(":id")
@@ -58,11 +56,10 @@ export class ArticlesController {
             where: { id: id }
         })
 
-        if (article == null) {
-            return [];
-        } else {
-            return article;
+        if (!article) {
+            throw new NotFoundException();
         }
+        return article;
     }
 
     @Post()
@@ -85,6 +82,10 @@ export class ArticlesController {
             }
         );
 
+        if (!article) {
+            throw new NotFoundException();
+        }
+
         return await this.articleRepository.save(
             {
                 ...article,
@@ -103,6 +104,10 @@ export class ArticlesController {
         const article = await this.articleRepository.findOneBy({
             id: id
         });
+
+        if (!article) {
+            throw new NotFoundException();
+        }
 
         await this.articleRepository.remove(article)
     };
