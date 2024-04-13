@@ -1,6 +1,5 @@
 {
     "version": 2,
-    "name": "miblog-backend",
     "buildCommand": "npm start",
     "installCommand": "npm install",
     "builds": [
