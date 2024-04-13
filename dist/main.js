@@ -3,7 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true, logger: ['error', 'warn', 'debug', 'log'] });
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, { logger: ['error', 'warn', 'debug', 'log'] });
+    app.enableCors({
+        origin: ["https://miblog.danielburbano.com", "http:localhost:5173"]
+    });
     app.setGlobalPrefix('api');
     await app.listen(3000);
 }
