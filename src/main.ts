@@ -2,7 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true, logger: ['error', 'warn', 'debug', 'log'] });
+  const app = await NestFactory.create(AppModule, { logger: ['error', 'warn', 'debug', 'log'] });
+  app.enableCors({
+    origin: ["https://miblog.danielburbano.com/", "http:localhost:3000/"]
+  })
   app.setGlobalPrefix('api');
   await app.listen(3000);
 }
