@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const whitelist = ["https://miblog.danielburbano.com", "http://localhost:5173"];
+  const whitelist = ["https://miblog.danielburbano.com"];
   var corsOptions = {
     origin: whitelist,
   }
